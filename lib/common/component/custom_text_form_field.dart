@@ -48,6 +48,7 @@ class CustomTextFormField extends StatelessWidget {
         filled: true,
         // 모든 Input 상태의 기본 스타일 세팅
         border: baseBorder, // 동그란 테두리 만들어 주는 부분
+        enabledBorder: baseBorder, // 선택 안되면 연해지는 것, 선택되면 보더가 들어감
         focusedBorder: baseBorder.copyWith(
           borderSide: baseBorder.borderSide.copyWith(
             color: PRIMARY_COLOR, // 베이스 보더의 색깔만 변경해서 넣겠다.

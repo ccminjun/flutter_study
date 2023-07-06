@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_study/common/component/custom_text_form_field.dart';
+import 'package:flutter_study/user/view/login_screen.dart';
 
 void main() {
   runApp(
@@ -13,25 +14,11 @@ class _App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'NotoSans',
+      ),
       debugShowCheckedModeBanner: false,  // 오른쪽 디버그 사라지게 해준다.
-      home: Scaffold(
-        backgroundColor: Colors.white, // 넣어줘야 회색이 보임
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomTextFormField(
-              hintText: '이메일을 입력해주세요.',
-              onChanged: (String value) { },
-            ),
-            CustomTextFormField(
-              hintText: '비밀번호를 입력해주세요.',
-              onChanged: (String value) { },
-              obscureText: true,
-            ),
-          ],
-        ),
-      )
-
+      home: LoginScreen(),
     );
   }
 }
