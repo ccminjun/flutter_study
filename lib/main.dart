@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_study/common/component/custom_text_form_field.dart';
+import 'package:flutter_study/common/view/splash_screen.dart';
 import 'package:flutter_study/user/view/login_screen.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class _App extends StatelessWidget {
         fontFamily: 'NotoSans',
       ),
       debugShowCheckedModeBanner: false,  // 오른쪽 디버그 사라지게 해준다.
-      home: LoginScreen(),
+      home: SplashScreen(),
     );
   }
 }

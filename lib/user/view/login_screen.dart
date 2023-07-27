@@ -24,7 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final storage = FlutterSecureStorage();
 
     final dio = Dio();
 
@@ -101,10 +100,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     final refreshToken = resp.data['refreshToken'];
                     final accessToken = resp.data['accessToken'];
 
-                    // 스토리지에 넣기기
+                    // 스토리지에 넣기
                     await storage.write(key: REFRESH_TOKEN_KEY, value: refreshToken);
                     await storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
-                    
+
                     // ignore: use_build_context_synchronously
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (_)=> RootTab(),
