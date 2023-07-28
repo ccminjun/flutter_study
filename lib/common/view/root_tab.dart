@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_study/common/const/colors.dart';
 import 'package:flutter_study/common/layout/default_layout.dart';
 
+import '../restaurant/view/restaurant_screen.dart';
+
 class RootTab extends StatefulWidget {
   const RootTab({Key? key}) : super(key: key);
 
@@ -21,19 +23,36 @@ class _RootTabState extends State<RootTab>
     super.initState();
 
     controller = TabController(length: 4, vsync: this); //vsync this가 기능을 가지고 있어야됨 SingleTickerProviderStateMixin 넣어줘라
+
+    controller.addListener(tabListener); // 연동을 하기 위해 탭리스너를 해줘야됨
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    controller.removeListener(tabListener);
+
+    super.dispose();
+  }
+
+  void tabListener(){
+    setState(() {
+      index = controller.index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return  DefaultLayout(
-      title: '코팩 딜리버리',
+      title: '민겅 딜리버리',
       child: TabBarView(
-        controller: ,
+        physics: NeverScrollableScrollPhysics(), // 탭바뷰에서 스크롤 하면 중지시킴
+        controller: controller,
         children: [
-          Container(child: Text('홈')),
-          Container(child: Text('음식')),
-          Container(child: Text('주문')),
-          Container(child: Text('프로필')),
+          RestaurantScreen(),
+          Center(child: Container(child: Text('음식'))),
+          Center(child: Container(child: Text('주문'))),
+          Center(child: Container(child: Text('프로필'))),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -44,9 +63,8 @@ class _RootTabState extends State<RootTab>
         type: BottomNavigationBarType.shifting, //선택된 거 크게
         // type: BottomNavigationBarType.fixed, //거슬린다면 fixed 사용해라
         onTap: (int index){
-          setState(() {
-            this.index = index;
-          });
+          // setState(() {
+          controller.animateTo(index); // 이렇게 넣어주면 된다.
         },
         currentIndex: index,
         items: const [
