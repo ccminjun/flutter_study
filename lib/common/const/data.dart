@@ -16,6 +16,6 @@ final ip = Platform.isIOS ? simulatorIp : emulatorIp;
 
 
 
-final storage = FlutterSecureStorage()  ;
+final storage = FlutterSecureStorage();
 
 

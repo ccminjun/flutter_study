@@ -13,8 +13,12 @@ class RestaurantScreen extends StatelessWidget {
     // 유효기간 5분
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
+    // final accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNjkwODA3NjM4LCJleHAiOjE2OTA4MDc5Mzh9.cKexwzADjr4WYFRHGK_zhBKrH8ydAltxCGr1KJtUO1g';
+
+
     final resp = await dio.get(
       'http//$ip/restaurant',
+      // 'http//127.0.0.1:3000/restaurant',
       options: Options(
           headers: {
             'authorization': 'Bearer $accessToken',
