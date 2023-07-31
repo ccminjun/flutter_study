@@ -27,14 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final dio = Dio();
 
-    // localhost
-    final emulatorIp = '10.0.2.2:3000';
-
-    final simulatorIp = '127.0.0.1:3000';
-
-    //모바일만 쓴다는 가정 하에는 정확한 IP
-    final ip = Platform.isIOS ? simulatorIp : emulatorIp;
-
     // final ip2 = simulatorIp;
 
 
@@ -121,15 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () async{
-                    final refreshToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTY5MDM4MTQyOSwiZXhwIjoxNjkwNDY3ODI5fQ.T4KsXfjig9_tHq66hdXvDwkE25ptEK10MwelPdoecc0';
-                    final resp = await dio.post('http://$ip/auth/token',
-                      options: Options(
-                          headers: {
-                            'authorization' : 'Bearer $refreshToken',
-                          }
-                      ),
-                    );
-                    // print(resp.data);
+
                   },
                   style: TextButton.styleFrom(
                     primary: Colors.black,

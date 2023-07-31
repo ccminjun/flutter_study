@@ -1,4 +1,5 @@
 // 기본 페이지가 될 예정
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_study/common/const/data.dart';
 import 'package:flutter_study/common/layout/default_layout.dart';
@@ -36,21 +37,35 @@ class _SplashScreenState extends State<SplashScreen> {
     // print(refreshToken);
     // print(accessToken);
 
+    final dio =Dio();
 
-    if(refreshToken == null || accessToken == null){
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (_) => LoginScreen(),
-          ),
-          (route) =>false,
+    try{
+      final resp = await dio.post('http://$ip/auth/token',
+        options: Options(
+            headers: {
+              'authorization' : 'Bearer $refreshToken',
+            }
+        ),
       );
-    }else{
+      
+      await storage.write(key: ACCESS_TOKEN_KEY, value: resp.data['accessToken']);
+
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (_) => RootTab(),
         ),
-        (route) => false,
+            (route) => false,
       );
+      // print(resp.data);
+    }catch(e){
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (_) => LoginScreen(),
+          ),
+              (route) =>false,
+        );
     }
   }
 
