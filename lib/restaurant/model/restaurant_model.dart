@@ -1,4 +1,4 @@
-import '../../const/data.dart';
+import '../../common/const/data.dart';
 
 enum RestaurantPriceRange{
   expensive,

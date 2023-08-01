@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_study/common/restaurant/component/restaurant_card.dart';
+import 'package:flutter_study/restaurant/view/restaurant_detail_screen.dart';
 
-import '../../const/data.dart';
+import '../../common/const/data.dart';
+import '../component/restaurant_card.dart';
 import '../model/restaurant_model.dart';
 
 class RestaurantScreen extends StatelessWidget {
@@ -66,22 +67,30 @@ class RestaurantScreen extends StatelessWidget {
                   //   deliveryFee: item['deliveryFee'],
                   // );
 
-                  return  RestaurantCard.fromModel(
-                    model: pItem,
-                    // image: Image.network(
-                    //   pItem.thumbUrl,
-                    //   fit: BoxFit.cover,
-                    // ),
-                    // // image: Image.asset(
-                    // //   'asset/img/food/ddeok_bok_gi.jpg',
-                    // //   fit: BoxFit.cover,
-                    // // ),
-                    // name: pItem.name,
-                    // tags: pItem.tags,
-                    // ratingsCount: pItem.ratingsCount,
-                    // deliveryTime: pItem.deliveryTime,
-                    // deliveryFee: pItem.deliveryFee,
-                    // ratings: pItem.ratings,
+                  return  GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => RestaurantDetailScreen(),
+                        ),
+                      );
+                    },
+                    child: RestaurantCard.fromModel(
+                      model: pItem,
+                      // image: Image.network(
+                      //   pItem.thumbUrl,
+                      //   fit: BoxFit.cover,
+                      // ),
+                      // // image: Image.asset(
+                      // //   'asset/img/food/ddeok_bok_gi.jpg',
+                      // //   fit: BoxFit.cover,
+                      // // ),
+                      // name: pItem.name,
+                      // tags: pItem.tags,
+                      // ratingsCount: pItem.ratingsCount,
+                      // deliveryTime: pItem.deliveryTime,
+                      // deliveryFee: pItem.deliveryFee,
+                      // ratings: pItem.ratings,
+                    ),
                   );
                 },
                 separatorBuilder: (_,index){
