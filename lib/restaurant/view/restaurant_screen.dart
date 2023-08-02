@@ -42,7 +42,10 @@ class RestaurantScreen extends StatelessWidget {
               // print(snapshot.error);
               // print(snapshot.data);
               if(!snapshot.hasData){
-                return Container();
+                return const Center(
+                  // 로딩하는 부분 추가
+                  child: CircularProgressIndicator(),
+                );
               }
 
               return ListView.separated(
@@ -51,7 +54,7 @@ class RestaurantScreen extends StatelessWidget {
                   final item = snapshot.data![index];
                   // parsed 변환됐다.
                   final pItem = RestaurantModel.fromJson(
-                      json: item,
+                      item,
                     );
                   //   final pItem = RestaurantModel(
                   //   id: item['id'],
@@ -70,7 +73,9 @@ class RestaurantScreen extends StatelessWidget {
                   return  GestureDetector(
                     onTap: (){
                       Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => RestaurantDetailScreen(),
+                        MaterialPageRoute(builder: (_) => RestaurantDetailScreen(
+                          id: pItem.id,
+                        ),
                         ),
                       );
                     },
@@ -94,7 +99,7 @@ class RestaurantScreen extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (_,index){
-                  return SizedBox(height: 16.0); // 각각의 사이사이에 들어오는 것
+                  return const SizedBox(height: 16.0); // 각각의 사이사이에 들어오는 것
                 },
               );
             },
