@@ -17,6 +17,8 @@ class CustomInterceptor extends Interceptor{
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     // TODO: implement onRequest
+    print('[ERR] [${options.method}] ${options.uri}');
+
 
     if (options.headers['accessToken'] == 'true') {
       options.headers.remove('accessToken');
@@ -43,6 +45,15 @@ class CustomInterceptor extends Interceptor{
     return super.onRequest(options, handler);
   }
   // 2) 응답을 받을때
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    // TODO: implement onResponse
+    print('[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}');
+
+
+    return super.onResponse(response, handler);
+  }
 
   // 3) 에러가 났을때
   @override
