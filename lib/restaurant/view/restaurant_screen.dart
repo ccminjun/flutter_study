@@ -12,7 +12,7 @@ import '../model/restaurant_model.dart';
 import '../provider/restaurant_provider.dart';
 
 final restaurantProvider =
-    StateNotifierProvider<RestaurantStateNotifier, List<RestaurantModel>>(
+    StateNotifierProvider<RestaurantStateNotifier, CursorPaginationBase>(
   (ref) {
     final repository = ref.watch(restaurantRepositoryProvider);
 
@@ -32,19 +32,28 @@ class RestaurantScreen extends ConsumerWidget {
     // 생성되면 그대로 유지 됨
     final data = ref.watch(restaurantProvider);
 
-    // 대충의 에러처리
-    if(data.length == 0){
+    if(data is CursorPaginationLoading){
       return Center(
         child: CircularProgressIndicator(),
       );
     }
 
+    // 대충의 에러처리
+    // if(data.length == 0){
+    //   return Center(
+    //     child: CircularProgressIndicator(),
+    //   );
+    // }
+
+    // 중간 단계로 씀
+    final cp = data as CursorPagination;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ListView.separated(
-        itemCount: data.length,
+        itemCount: cp.data.length,
         itemBuilder: (_, index) {
-          final pItem = data[index];
+          final pItem = cp.data[index];
 
 
           return GestureDetector(
