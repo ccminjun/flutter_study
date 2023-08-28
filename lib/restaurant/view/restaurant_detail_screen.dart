@@ -5,87 +5,47 @@ import 'package:flutter_study/common/dio/dio.dart';
 import 'package:flutter_study/common/layout/default_layout.dart';
 import 'package:flutter_study/product/component/product_card.dart';
 import 'package:flutter_study/restaurant/model/restaurant_detail_model.dart';
+import 'package:flutter_study/restaurant/provider/restaurant_provider.dart';
 import 'package:flutter_study/restaurant/repository/restaurant_repository.dart';
 
 import '../../common/const/data.dart';
 import '../component/restaurant_card.dart';
+import '../model/restaurant_model.dart';
 
-class RestaurantDetailScreen extends ConsumerWidget {
+class RestaurantDetailScreen extends StatelessWidget {
   final String id;
 
   const RestaurantDetailScreen({
     required this.id,
     Key? key}) : super(key: key);
 
-  // Future<RestaurantDetailModel> getRestaurantDetail(WidgetRef ref) async {
-  //   return ref.watch(restaurantRepositoryProvider).getRestaurantDetail(
-  //         id: id,
-  //       );
-
-    // final dio = Dio();
-    //
-    // // final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
-    // dio.interceptors.add(
-    //   CustomInterceptor(storage: storage),
-    // );
-    /* 최근 주석
-    final dio = ref.watch(dioProvider);
-
-    final repository = RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
-
-    return repository.getRestaurantDetail(id: id);
-    */
-    // final resp = await dio.get(
-    //   'http://$ip/restaurant/$id',
-    //   options: Options(
-    //     headers: {'authorization': 'Bearer $accessToken'
-    //     },
-    //   ),
-    // );
-    //
-    // return resp.data;
-  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final state = ref.watch(restaurantDetailProvider(id));
+
+    if(state ==null) {
+      return DefaultLayout(
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+      );
+    }
+
     return DefaultLayout(
-      title: '불타는 떢복이',
-      child: FutureBuilder<RestaurantDetailModel>(
-        future: ref.watch(restaurantRepositoryProvider).getRestaurantDetail(
-          id: id,
-        ),
-        builder: (_, AsyncSnapshot<RestaurantDetailModel> snapshot) {
-          if(snapshot.hasError){
-            return Center(
-              child: Text(snapshot.error.toString()),
-            );
-          }
-
-          if(!snapshot.hasData){
-            return const Center(
-              // 로딩하는 부분 추가
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          // 바로 매핑된 모델이 나오기 때문에 해줄 필요가 없다.
-          // final item = RestaurantDetailModel.fromJson(
-          //     snapshot.data!,
-          // );
-
-          return CustomScrollView(
-            slivers: [
-              renderTop(
-                model : snapshot.data!,
-              ),
-              renderLabel(),
-              renderProducts(
-                products: snapshot.data!.products,
-              ),
-            ],
-          );
-        },
-      ), // child:
+        title: '불타는 떢복이',
+        child: CustomScrollView(
+          slivers: [
+            renderTop(
+              model: state,
+            ),
+            // renderLabel(),
+            // renderProducts(
+            //   products: snapshot.data!.products,
+            // ),
+          ],
+        )
     );
   }
 
@@ -129,7 +89,7 @@ class RestaurantDetailScreen extends ConsumerWidget {
 
   // 일반 위젯을 넣으려면 SliverToBoxAdapter 써줘야 됨
   SliverToBoxAdapter renderTop({
-    required RestaurantDetailModel model,
+    required RestaurantModel model,
   }) {
     return SliverToBoxAdapter(
       child: RestaurantCard.fromModel(
