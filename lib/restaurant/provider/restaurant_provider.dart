@@ -11,7 +11,7 @@ final restaurantDetailProvider =
   final state = ref.watch(restaurantProvider);
 
   // 커서페이지네이션이 아니라는 뜻은 리스트가 없다는 뜻
-  if (state is! CursorPagination<RestaurantModel>) {
+  if (state is! CursorPagination) {
     return null;
   }
 
@@ -22,8 +22,8 @@ final restaurantDetailProvider =
 });
 
 final restaurantProvider =
-StateNotifierProvider<RestaurantStateNotifier, CursorPaginationBase>(
-      (ref) {
+    StateNotifierProvider<RestaurantStateNotifier, CursorPaginationBase>(
+  (ref) {
     final repository = ref.watch(restaurantRepositoryProvider);
 
     final notifier = RestaurantStateNotifier(repository: repository);
@@ -31,7 +31,6 @@ StateNotifierProvider<RestaurantStateNotifier, CursorPaginationBase>(
     return notifier;
   },
 );
-
 
 // RestaurantStateNotifier 생성이 되는 순간 paginate 가 됨
 class RestaurantStateNotifier extends StateNotifier<CursorPaginationBase> {
@@ -178,7 +177,7 @@ class RestaurantStateNotifier extends StateNotifier<CursorPaginationBase> {
     // 아이디로 대체, 아닐경우 원래 데이터 반환
     state = pState.copyWith(
       data: pState.data
-          .map(
+          .map<RestaurantModel>(
             (e) => e.id == id ? resp : e,
           )
           .toList(),
