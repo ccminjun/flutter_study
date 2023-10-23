@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_study/common/model/pagination_params.dart';
+import 'package:flutter_study/common/repository/base_pagination_repository.dart';
 import 'package:flutter_study/restaurant/model/restaurant_model.dart';
 import 'package:retrofit/http.dart';
 
@@ -23,7 +24,8 @@ final restaurantRepositoryProvider = Provider<RestaurantRepository>(
 );
 
 @RestApi()
-abstract class RestaurantRepository{
+abstract class RestaurantRepository
+    implements IBasePaginationRepository<RestaurantModel>{
   // http://$ip/restaurant
   factory RestaurantRepository(Dio dio, {String baseUrl}) =
     _RestaurantRepository;

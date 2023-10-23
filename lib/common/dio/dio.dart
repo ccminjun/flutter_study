@@ -6,6 +6,7 @@ import 'package:flutter_study/common/const/data.dart';
 import '../secure_storage/secure_storage.dart';
 
 
+// ref 해서 dio를 불러와서 쓸 수 있다.
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio();
 

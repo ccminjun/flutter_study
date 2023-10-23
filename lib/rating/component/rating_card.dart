@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_study/common/const/colors.dart';
 import 'package:collection/collection.dart';
 
+import '../model/rating_model.dart';
+
 class RatingCard extends StatelessWidget {
   // NetworkImage
   // AssetImage
   //
   // CircleAvatar
   final ImageProvider avatarImage;
+
   // 리스트로 위젯 이미지를 보여줄 때
   final List<Image> images;
+
   // 별점
   final int rating;
+
   // 이메일
   final String email;
+
   // 리뷰 내용
   final String content;
 
@@ -23,8 +29,22 @@ class RatingCard extends StatelessWidget {
     required this.rating,
     required this.email,
     required this.content,
-    Key? key}) : super(key: key);
+    Key? key,
+  }) : super(key: key);
 
+  factory RatingCard.fromModel({
+    required RatingModel model,
+  }) {
+    return RatingCard(
+        avatarImage: NetworkImage(
+          model.user.imageUrl,
+        ),
+        images: model.imgUrls.map((e) => Image.network(e)).toList(),
+        rating: model.rating,
+        email: model.user.username,
+        content: model.content
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
