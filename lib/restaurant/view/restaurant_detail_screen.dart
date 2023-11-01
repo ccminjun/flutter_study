@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_study/common/dio/dio.dart';
 import 'package:flutter_study/common/layout/default_layout.dart';
 import 'package:flutter_study/common/model/cursor_pagination_model.dart';
+import 'package:flutter_study/common/utils/pagination_utils.dart';
 import 'package:flutter_study/product/component/product_card.dart';
 import 'package:flutter_study/rating/component/rating_card.dart';
 import 'package:flutter_study/restaurant/model/restaurant_detail_model.dart';
@@ -28,7 +29,9 @@ class RestaurantDetailScreen extends ConsumerStatefulWidget {
   ConsumerState<RestaurantDetailScreen> createState() => _RestaurantDetailScreenState();
 }
 
-class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen> {
+class _RestaurantDetailScreenState
+    extends ConsumerState<RestaurantDetailScreen> {
+  final ScrollController controller = ScrollController();
 
   @override
   void initState() {
@@ -37,8 +40,18 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
 
     //디테일 화면에 갈때마다 디테일 정보를 가져옴
     ref.read(restaurantProvider.notifier).getDetail(id: widget.id);
+    
+    controller.addListener(listener);
   }
 
+  void listener() {
+    PaginationUtils.paginate(
+      controller: controller,
+      provider: ref.read(
+        restaurantRatingProvider(widget.id).notifier,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +71,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
     return DefaultLayout(
         title: '불타는 떢복이',
         child: CustomScrollView(
+          controller: controller,
           slivers: [
             renderTop(
               model: state,

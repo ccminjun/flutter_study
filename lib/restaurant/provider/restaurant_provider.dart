@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_study/common/model/cursor_pagination_model.dart';
-import 'package:flutter_study/common/model/pagination_params.dart';
 import 'package:flutter_study/common/provider/pagination_provider.dart';
 import 'package:flutter_study/restaurant/model/restaurant_model.dart';
 

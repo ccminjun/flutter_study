@@ -24,8 +24,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     // deleteToken();
+    // Duration(seconds: 10000);
     checkToken();
   }
 
